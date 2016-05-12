@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".AirPlayActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!--<EditText-->
+            <!--android:id="@+id/Port"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:padding="4dp"-->
+            <!--android:inputType="phone"-->
+            <!--android:maxLength="5"-->
+            <!--android:textSize="28sp"-->
+            <!--android:hint="端口"-->
+            <!--android:enabled="false"-->
+            <!--android:focusable="false"/>-->
+
+        <!--<Button-->
+            <!--android:id="@+id/PortButton"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:onClick="onPort"-->
+            <!--android:padding="4dp"-->
+            <!--android:text="应用" />-->
+
+        <TextView
+            android:id="@+id/PlayVideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/list_selector_background"
+            android:onClick="onPlayVideo"
+            android:padding="12dp"
+            android:text="播放视频" />
+
+        <TextView
+            android:id="@+id/VideoInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/list_selector_background"
+            android:onClick="onVideoInfo"
+            android:padding="12dp"
+            android:text="视频信息" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/Play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/list_selector_background"
+            android:onClick="onPlay"
+            android:padding="12dp"
+            android:text="Play" />
+
+        <TextView
+            android:id="@+id/Pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/list_selector_background"
+            android:onClick="onPause"
+            android:padding="12dp"
+            android:text="Pause" />
+
+        <TextView
+            android:id="@+id/Stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/list_selector_background"
+            android:onClick="onStop"
+            android:padding="12dp"
+            android:text="Stop" />
+
+        <TextView
+            android:id="@+id/VolumeUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/list_selector_background"
+            android:onClick="onVolumeUp"
+            android:padding="12dp"
+            android:text="Volume +" />
+
+        <TextView
+            android:id="@+id/VolumeDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/list_selector_background"
+            android:onClick="onVolumeDown"
+            android:padding="12dp"
+            android:text="Volume -" />
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <SeekBar
+            android:id="@+id/SeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp" />
+
+        <TextView
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:paddingLeft="12dp"
+            android:text="00:00" />
+
+        <TextView
+            android:id="@+id/end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:paddingRight="12dp"
+            android:text="00:00" />
+    </FrameLayout>
+
+
+    <ScrollView
+        android:id="@+id/ScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="bottom">
+
+        <TextView
+            android:id="@+id/Result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="日志" />
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/TouchPanel"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#80000000"
+        android:text="触控板" />
+</LinearLayout>

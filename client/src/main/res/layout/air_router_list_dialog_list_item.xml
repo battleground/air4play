@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:duplicateParentState="true"
+        android:scaleType="center"
+        android:src="@drawable/remote_device_list_tv_icon"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/icon"
+        android:layout_toLeftOf="@+id/layout_connect_state"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:duplicateParentState="true"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="设备"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/Ip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:duplicateParentState="true"
+            android:ellipsize="end"
+            android:gravity="center_vertical|right"
+            android:singleLine="true"
+            android:text="192.168.1.xxx"
+            android:textSize="12sp"
+            android:visibility="visible"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/layout_connect_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp">
+
+        <ImageView
+            android:id="@+id/warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_remote_device_list_warning"
+            android:visibility="gone"/>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_gravity="center"
+            android:indeterminateDrawable="@drawable/remote_device_list_progress_drawable"
+            android:indeterminateDuration="1500"
+            android:visibility="gone"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#CCC"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@id/icon"
+        android:layout_alignRight="@id/layout_connect_state"/>
+</RelativeLayout>
+

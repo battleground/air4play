@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_select"
+        android:title="选择设备"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_close"
+        android:title="关闭远程"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_248"
+        android:title="连接248机器"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_191"
+        android:title="连接191机器"
+        app:showAsAction="never" />
+
+</menu>

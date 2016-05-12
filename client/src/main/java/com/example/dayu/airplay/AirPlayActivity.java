@@ -119,7 +119,7 @@ public class AirPlayActivity extends AppCompatActivity implements
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:{
+                    case MotionEvent.ACTION_DOWN: {
                         down = true;
                         mx = event.getX();
                         my = event.getY();
@@ -128,7 +128,7 @@ public class AirPlayActivity extends AppCompatActivity implements
                         mRemotePlayer.touch(touch);
                         break;
                     }
-                    case MotionEvent.ACTION_UP:{
+                    case MotionEvent.ACTION_UP: {
                         down = false;
                         mIgnoreActionNums = 0;
                         Touch touch = createTouchBean(event);
@@ -240,7 +240,7 @@ public class AirPlayActivity extends AppCompatActivity implements
         mRouterDialog.show();
     }
 
-    private boolean showing() {
+    private boolean isShowing() {
         if (mRouterDialog != null)
             return mRouterDialog.isShowing();
         return false;
@@ -275,35 +275,26 @@ public class AirPlayActivity extends AppCompatActivity implements
 
     @Override
     public void onError(Exception e) {
-        Device device = Discover.getInstance().getSelectedDevice();
-        Discover.getInstance().setDeviceState(device, Connectable.State.NO_CONNECT);
-        mRouterDialog.getAdapter().notifyDataSetChanged();
-
         print(e.toString());
     }
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        Device device = Discover.getInstance().getSelectedDevice();
-        Discover.getInstance().setDeviceState(device, Connectable.State.NO_CONNECT);
-        mRouterDialog.getAdapter().notifyDataSetChanged();
         print("code:" + code + ", remote:" + remote + ", reason:" + reason);
     }
 
     @Override
     public void onOpen(ServerHandshake serverHandshake) {
-        Device device = Discover.getInstance().getSelectedDevice();
-        Discover.getInstance().setDeviceState(device, Connectable.State.CONNECTED);
-        mRouterDialog.getAdapter().notifyDataSetChanged();
-
         print("连接:" + " OK");
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mRouterDialog.dismiss();
-            }
-        }, 500);
+        if (isShowing()) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mRouterDialog.dismiss();
+                }
+            }, 500);
+        }
     }
 
     private Gson mGson = new Gson();

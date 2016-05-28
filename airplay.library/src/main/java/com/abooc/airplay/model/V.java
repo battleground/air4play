@@ -1,14 +1,17 @@
 package com.abooc.airplay.model;
 
+import android.support.annotation.Keep;
+
 import com.google.gson.Gson;
 
 /**
  * Description: <pre></pre>
- * <p/>
+ * <br>
  * Creator: 大宇
  * E-mail: allnet@live.cn
  * Date: 16/4/20
  */
+@Keep
 public class V {
 
     /**
@@ -41,10 +44,15 @@ public class V {
         }
     }
 
+    @Keep
     public int type;
+    @Keep
     public String name;
+    @Keep
     public String url;
+    @Keep
     public long position;
+    @Keep
     public long duration;
 
     @Override

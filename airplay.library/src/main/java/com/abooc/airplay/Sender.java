@@ -1,16 +1,18 @@
 package com.abooc.airplay;
 
+import android.support.annotation.NonNull;
+
 /**
  * Description: <pre>
- * <p/>
+ * <br>
  *     发送者
- * <p/>
+ * <br>
  * </pre>
- * <p/>
+ * <br>
  * Creator: 大宇
  * E-mail: allnet@live.cn
  * Date: 16/4/20
  */
 public interface Sender {
-    void doSend(String message);
+    void doSend(@NonNull String message);
 }

@@ -2,7 +2,7 @@ package com.abooc.airplay;
 
 /**
  * Description: <pre></pre>
- * <p/>
+ * <br>
  * Creator: 大宇
  * E-mail: allnet@live.cn
  * Date: 16/4/23

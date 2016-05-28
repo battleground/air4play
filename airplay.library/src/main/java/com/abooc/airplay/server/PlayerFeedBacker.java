@@ -21,7 +21,7 @@ import static com.abooc.airplay.model.Action.VOLUME;
  *     远程播放器回执消息.目前不会用到.
  *
  * </pre>
- * <p/>
+ * <br>
  * Creator: 大宇
  * E-mail: allnet@live.cn
  * Date: 16/4/23

@@ -3,8 +3,7 @@ package com.example.dayu.airplay;
 import android.content.Context;
 import android.os.Bundle;
 
-
-import org.lee.android.util.Log;
+import com.abooc.util.Debug;
 
 import tv.matchstick.flint.ApplicationMetadata;
 import tv.matchstick.flint.ConnectionResult;
@@ -38,12 +37,12 @@ public class FlintGo {
         mFlintListener = new Flint.Listener() {
             @Override
             public void onApplicationStatusChanged() {
-                Log.anchor("onApplicationStatusChanged: " + Flint.FlintApi.getApplicationStatus(mApiClient));
+                Debug.anchor("onApplicationStatusChanged: " + Flint.FlintApi.getApplicationStatus(mApiClient));
             }
 
             @Override
             public void onVolumeChanged() {
-                Log.anchor("onVolumeChanged: " + Flint.FlintApi.getVolume(mApiClient));
+                Debug.anchor("onVolumeChanged: " + Flint.FlintApi.getVolume(mApiClient));
             }
 
             @Override
@@ -66,7 +65,7 @@ public class FlintGo {
     private class ConnectionCallbacks implements FlintManager.ConnectionCallbacks {
         @Override
         public void onConnected(Bundle connectionHint) {
-            Log.anchor("isSuccess, connectionHint: " + connectionHint);
+            Debug.anchor("isSuccess, connectionHint: " + connectionHint);
             if (mWaitingForReconnect) {
                 mWaitingForReconnect = false;
 //                reconnectChannels();
@@ -75,7 +74,7 @@ public class FlintGo {
                     Flint.FlintApi.launchApplication(mApiClient, "~flintplayer", false).setResultCallback(new ResultCallback<Flint.ApplicationConnectionResult>() {
                         @Override
                         public void onResult(Flint.ApplicationConnectionResult result) {
-                            Log.anchor("result:" + result);
+                            Debug.anchor("result:" + result);
                             Status status = result.getStatus();
                             if (status.isSuccess()) {
                                 ApplicationMetadata applicationMetadata = result.getApplicationMetadata();
@@ -87,7 +86,7 @@ public class FlintGo {
                         }
                     });
                 } catch (Exception e) {
-                    Log.anchor("Failed to launch application: " + e);
+                    Debug.anchor("Failed to launch application: " + e);
                 }
             }
         }
@@ -95,12 +94,12 @@ public class FlintGo {
         @Override
         public void onConnectionSuspended(int cause) {
             mWaitingForReconnect = true;
-            Log.anchor("cause: " + cause);
+            Debug.anchor("cause: " + cause);
         }
 
         @Override
         public void onConnectionFailed(ConnectionResult connectionResult) {
-            Log.anchor("connectionResult: " + connectionResult);
+            Debug.anchor("connectionResult: " + connectionResult);
             teardown();
 
         }
@@ -108,7 +107,7 @@ public class FlintGo {
     }
 
     private void teardown() {
-        Log.anchor("teardown");
+        Debug.anchor("teardown");
 //        if (mApiClient != null) {
 //            if (mApplicationStarted) {
 //                if (mApiClient.isConnected() || mApiClient.isConnecting()) {

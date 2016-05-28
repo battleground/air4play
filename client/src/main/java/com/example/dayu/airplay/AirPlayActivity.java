@@ -19,18 +19,18 @@ import com.abooc.airplay.OnConnectListener;
 import com.abooc.airplay.OnReceiveMessageListener;
 import com.abooc.airplay.RemotePlayer;
 import com.abooc.airplay.Utils;
-import com.abooc.airplay.model.Touch;
-import com.dlna.Connectable;
 import com.abooc.airplay.model.Action;
 import com.abooc.airplay.model.SeekProcess;
+import com.abooc.airplay.model.Touch;
 import com.abooc.airplay.model.V;
+import com.abooc.util.Debug;
+import com.dlna.Connectable;
 import com.dlna.Device;
 import com.dlna.Discover;
 import com.dlna.RouterListDialog;
 import com.google.gson.Gson;
 
 import org.java_websocket.handshake.ServerHandshake;
-import org.lee.android.util.Log;
 
 import static com.abooc.airplay.model.Action.PAUSE;
 import static com.abooc.airplay.model.Action.REMOTE_CLIENT_CODE;
@@ -105,7 +105,7 @@ public class AirPlayActivity extends AppCompatActivity implements
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 if (isConnecting()) {
-                    Log.anchor("progress:" + seekBar.getProgress());
+                    Debug.anchor("progress:" + seekBar.getProgress());
                     mRemotePlayer.seek(seekBar.getProgress());
                 }
 
@@ -209,13 +209,13 @@ public class AirPlayActivity extends AppCompatActivity implements
 
     @Override
     protected void onResume() {
-        Log.anchor();
+        Debug.anchor();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        Log.anchor();
+        Debug.anchor();
         super.onPause();
     }
 
@@ -247,7 +247,7 @@ public class AirPlayActivity extends AppCompatActivity implements
     }
 
     public void onPlayVideo(View view) {
-        Log.anchor();
+        Debug.anchor();
         if (isConnecting()) {
             V v = new V();
             v.url = Build.VIDEO_VR_URL;
@@ -258,7 +258,7 @@ public class AirPlayActivity extends AppCompatActivity implements
     }
 
     public void onVideoInfo(View view) {
-        Log.anchor();
+        Debug.anchor();
 
         mRemotePlayer.getVideoInfo();
     }

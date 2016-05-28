@@ -6,13 +6,12 @@ import android.os.Message;
 
 import com.abooc.airplay.OnReceiveMessageListener;
 import com.abooc.airplay.model.Action;
-import com.abooc.airplay.server.OnClientConnectListener;
+import com.abooc.util.Debug;
 import com.google.gson.Gson;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
-import org.lee.android.util.Log;
 
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -30,7 +29,7 @@ public class AirServer extends WebSocketServer {
 
     public AirServer(InetSocketAddress address) {
         super(address);
-        Log.anchor(address);
+        Debug.anchor(address);
     }
 
     public void setOnConnectListener(OnClientConnectListener listener) {
@@ -45,7 +44,7 @@ public class AirServer extends WebSocketServer {
     @Override
     public void onOpen(final WebSocket conn, final ClientHandshake handshake) {
         String message = conn.getRemoteSocketAddress() + " 已连接, 共" + connections().size() + "个连接";
-        Log.anchor(message);
+        Debug.anchor(message);
 
         UiThread.post(new Runnable() {
             @Override
@@ -60,7 +59,7 @@ public class AirServer extends WebSocketServer {
     @Override
     public void onClose(final WebSocket conn, final int code, final String reason, final boolean remote) {
         String message = conn.getRemoteSocketAddress() + "已断开, code:" + code + ", remote:" + remote + ", reason:" + reason;
-        Log.anchor(message);
+        Debug.anchor(message);
 
         UiThread.post(new Runnable() {
             @Override
@@ -86,7 +85,7 @@ public class AirServer extends WebSocketServer {
     public void onMessage(WebSocket conn, String message) {
         mWebSocket = conn;
 
-        Log.anchor(conn.getRemoteSocketAddress() + ":" + message);
+        Debug.anchor(conn.getRemoteSocketAddress() + ":" + message);
 
         Message toUi = Message.obtain();
         toUi.obj = message;
@@ -96,7 +95,7 @@ public class AirServer extends WebSocketServer {
 
     @Override
     public void onError(WebSocket conn, final Exception ex) {
-        Log.e(conn.getRemoteSocketAddress() + ", Exception:" + ex);
+        Debug.e(conn.getRemoteSocketAddress() + ", Exception:" + ex);
 
         UiThread.post(new Runnable() {
             @Override

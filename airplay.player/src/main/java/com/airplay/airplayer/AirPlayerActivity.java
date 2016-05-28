@@ -90,6 +90,7 @@ public class AirPlayerActivity extends AppCompatActivity implements
         });
         mVodPlayer = (VodPlayer) mMediaController.getPlayer();
         mVodPlayer.setDecodeMode(DecodeMode.MEDIAPLYAER);
+        mVodPlayer.setDefinition("流畅");
 
         mAirServer = new AirServer(new InetSocketAddress(DEFAULT_PORT));
         mAirServer.setOnReceiveMessageListener(this);
@@ -193,7 +194,8 @@ public class AirPlayerActivity extends AppCompatActivity implements
             case START:
                 mVodPlayer.stop();
 
-                Action<V> vAction = mGson.fromJson(message, new TypeToken<Action<V>>(){}.getType());
+                Action<V> vAction = mGson.fromJson(message, new TypeToken<Action<V>>() {
+                }.getType());
                 V video = vAction.getInfo();
 
                 print("播放, type:" + video.type + ", url:" + video.url);
@@ -222,7 +224,8 @@ public class AirPlayerActivity extends AppCompatActivity implements
                 break;
 
             case SEEK:
-                Action<SeekProcess> seekAction = mGson.fromJson(message, new TypeToken<Action<SeekProcess>>(){}.getType());
+                Action<SeekProcess> seekAction = mGson.fromJson(message, new TypeToken<Action<SeekProcess>>() {
+                }.getType());
                 SeekProcess seekProcess = seekAction.getInfo();
                 mVodPlayer.seekTo(seekProcess.position);
 //                mSeekBar.setMax(seekProcess.duration);
@@ -239,12 +242,14 @@ public class AirPlayerActivity extends AppCompatActivity implements
                 break;
             case TOUCH_XYZ:
 
-                Action<Xyz> xyzAction = mGson.fromJson(message, new TypeToken<Action<Xyz>>(){}.getType());
+                Action<Xyz> xyzAction = mGson.fromJson(message, new TypeToken<Action<Xyz>>() {
+                }.getType());
                 Xyz xyz = xyzAction.getInfo();
                 mVodPlayer.setRotation(xyz.x, xyz.y, xyz.z);
                 break;
             case GOS:
-                Action<GYRO> gyroAction = mGson.fromJson(message, new TypeToken<Action<GYRO>>(){}.getType());
+                Action<GYRO> gyroAction = mGson.fromJson(message, new TypeToken<Action<GYRO>>() {
+                }.getType());
                 GYRO gyro = gyroAction.getInfo();
 
                 Log.anchor("array:" + (gyro.array == null ? "NULL" : toString(gyro.array)));
@@ -325,7 +330,6 @@ public class AirPlayerActivity extends AppCompatActivity implements
             e.printStackTrace();
         }
     }
-
 
 
     public Touch createTouchBean(MotionEvent event) {

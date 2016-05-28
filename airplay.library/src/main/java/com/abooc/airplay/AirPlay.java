@@ -5,11 +5,11 @@ import android.os.Looper;
 import android.os.Message;
 
 import com.abooc.airplay.model.Action;
+import com.abooc.util.Debug;
 import com.google.gson.Gson;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
-import org.lee.android.util.Log;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -44,25 +44,28 @@ public class AirPlay {
 
     public void connect(String ip) {
         String wsAddress = "ws://" + ip + ":" + WEB_SOCKET_PORT;
-        Log.anchor(wsAddress);
-        URI uri = URI.create(wsAddress);
-
+        Debug.anchor(wsAddress);
         if (mClient != null && (mClient.isOpen()
                 || mClient.isConnecting())) {
             mClient.close();
         }
-
+        URI uri = URI.create(wsAddress);
         mClient = new Client(uri);
         mClient.connect();
     }
 
+    public void closeAll() {
+
+    }
+
+
     public void send(String message) {
         if (isConnecting()) {
-            Log.anchor("send:" + message);
+            Debug.anchor("send:" + message);
             try {
                 mClient.send(message);
             } catch (IllegalArgumentException e) {
-                Log.e(e.getMessage());
+                Debug.e(e.getMessage());
             }
         }
     }
@@ -112,7 +115,7 @@ public class AirPlay {
         public void onOpen(final ServerHandshake serverHandshake) {
             if (mRemotePlayer != null)
                 mRemotePlayer.remoteOn();
-            Log.anchor(getConnection().getRemoteSocketAddress());
+            Debug.anchor(getConnection().getRemoteSocketAddress());
             UiThread.post(new Runnable() {
                 @Override
                 public void run() {
@@ -127,7 +130,7 @@ public class AirPlay {
         public void onMessage(String message) {
             if (mRemotePlayer != null)
                 mRemotePlayer.remoteOn();
-            Log.anchor(getConnection().getRemoteSocketAddress() + ":" + message);
+            Debug.anchor(getConnection().getRemoteSocketAddress() + ":" + message);
             Message toUi = Message.obtain();
             toUi.obj = message;
             UiThread.sendMessage(toUi);
@@ -137,7 +140,7 @@ public class AirPlay {
         public void onClose(final int code, final String reason, final boolean remote) {
             if (mRemotePlayer != null)
                 mRemotePlayer.remoteOff();
-            Log.anchor(getConnection().getRemoteSocketAddress());
+            Debug.anchor(getConnection().getRemoteSocketAddress());
             UiThread.post(new Runnable() {
                 @Override
                 public void run() {
@@ -151,7 +154,7 @@ public class AirPlay {
 
         @Override
         public void onError(final Exception e) {
-            Log.anchor(getConnection().getRemoteSocketAddress() + ", Exception:" + e);
+            Debug.anchor(getConnection().getRemoteSocketAddress() + ", Exception:" + e);
 
             UiThread.post(new Runnable() {
                 @Override

@@ -23,7 +23,7 @@ import static com.abooc.airplay.model.Action.VOLUME;
 
 /**
  * 手机端向远程端发送消息
- * <p/>
+ * <br>
  * Created by author:大宇
  * email:allnet@live.cn
  */

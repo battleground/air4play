@@ -21,6 +21,11 @@ android {
 }
 
 dependencies {
+    repositories {
+        maven { url "http://192.168.8.212:8081/repository/maven-releases/" }
+    }
+    compile 'com.abooc.debug:debug-core:latest.integration'
+
     compile project(':airplay.library')
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'

@@ -3,8 +3,8 @@ package com.abooc.airplay.model;
 import com.google.gson.Gson;
 
 /**
- * Description: <pre></pre>
- * <p>
+ * Description: <pre>远程事件（Action）</pre>
+ * <br>
  * Creator: 大宇
  * E-mail: allnet@live.cn
  * Date: 16/4/21
@@ -12,7 +12,6 @@ import com.google.gson.Gson;
 public class Action<JSON_TYPE> {
 
     public static final int REMOTE_CLIENT_CODE = 100;
-
 
 
     /**
@@ -39,11 +38,6 @@ public class Action<JSON_TYPE> {
      * 开启GOS
      */
     public static final int PLAYER_GOS = 121;
-
-
-
-
-
 
 
     /**

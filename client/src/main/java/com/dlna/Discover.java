@@ -5,7 +5,8 @@ import android.support.v7.media.MediaRouteSelector;
 import android.support.v7.media.MediaRouter;
 import android.support.v7.media.MediaRouter.RouteInfo;
 
-import org.lee.android.util.Log;
+import com.abooc.util.Debug;
+
 import org.lee.java.util.Empty;
 
 import java.util.ArrayList;
@@ -110,7 +111,7 @@ public class Discover {
     private class MediaRouterCallback extends MediaRouter.Callback {
         @Override
         public void onRouteAdded(MediaRouter router, RouteInfo route) {
-            Log.anchor(route.toString());
+            Debug.anchor(route.toString());
             FlintDevice flintDevice = FlintDevice.getFromBundle(route.getExtras());
 //            String name = flintDevice.getFriendlyName();
 //            if (name != null && name.contains("兔子视频")) {
@@ -136,7 +137,7 @@ public class Discover {
         public void onRouteRemoved(MediaRouter router, RouteInfo route) {
             FlintDevice flintDevice = FlintDevice.getFromBundle(route.getExtras());
             String ip = flintDevice.getIpAddress().toString();
-            Log.anchor(ip);
+            Debug.anchor(ip);
 
             Device device = new Device();
             device.setFlintDevice(flintDevice);

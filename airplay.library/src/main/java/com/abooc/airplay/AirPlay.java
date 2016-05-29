@@ -54,10 +54,9 @@ public class AirPlay {
         mClient.connect();
     }
 
-    public void closeAll() {
-
+    public void sendVersion(int versionCode) {
+        send("{\"code\":" + versionCode + "}");
     }
-
 
     public void send(String message) {
         if (isConnecting()) {

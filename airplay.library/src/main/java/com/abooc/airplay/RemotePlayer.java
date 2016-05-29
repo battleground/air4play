@@ -52,14 +52,23 @@ public class RemotePlayer {
         mSender = sender;
     }
 
-    public void setStatus(Player player) {
+    /**
+     * 远程端是否正在播放
+     *
+     * @return
+    /**
+     * 设置播放状态
+     *
+     * @param player 播放状态
+     */
+    public void setStatus(RemotePlayer.Player player) {
         mPlayerStatus = player;
     }
 
     /**
      * 远程端是否正在播放
      *
-     * @return
+     * @return true 正在播放中
      */
     public boolean isPlaying() {
         return mPlayerStatus == Player.PLAYING;
@@ -74,9 +83,9 @@ public class RemotePlayer {
     }
 
     /**
-     * 是否正在远程投屏
+     * 投屏播控中
      *
-     * @return
+     * @return true 投屏中
      */
     public boolean isRemoting() {
         return mPlayerStatus != null;

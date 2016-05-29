@@ -70,13 +70,17 @@ public class AirPlayActivity extends AppCompatActivity implements
 
         setContentView(R.layout.activity_air);
         bindVideoView();
-        bindTouchPanel();
+//        bindTouchPanel();
+
+
+        mTouchPanel = findViewById(R.id.TouchPanel);
+        mTouchPanel.setOnTouchListener(onTouchListener());
 
         mScrollView = (ScrollView) findViewById(R.id.ScrollView);
         mResult = (TextView) findViewById(R.id.Result);
 
         mAirPlay = AirPlay.getInstance();
-        mAirPlay.setOnConnectListener(this);
+        mAirPlay.registerOnConnectListener(this);
         mAirPlay.registerOnReceiveMessageListener(this);
         mRemotePlayer = AirPlay.getInstance().build();
     }
@@ -153,6 +157,122 @@ public class AirPlayActivity extends AppCompatActivity implements
         });
     }
 
+
+    private float dX;
+    private float dY;
+    private boolean isClick;
+
+    private View.OnTouchListener onTouchListener() {
+        return new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        dX = event.getX();
+                        dY = event.getY();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP:
+                        if (isClick) {
+                            isClick = false;
+                            doClick(event);
+                        } else {
+
+                            float x = event.getX();
+                            float y = event.getY();
+
+                            if (Math.abs(x - dX) > Math.abs(y - dY)) {// 横向
+                                if (x > dX) { // →
+                                    onRight();
+                                } else { // ←
+                                    onLeft();
+                                }
+                            } else { //纵向
+                                if (y > dY) { // 下
+                                    onDown();
+                                } else { // 上
+                                    onUp();
+                                }
+                            }
+                        }
+                        dX = 0;
+                        dY = 0;
+                        break;
+                    case MotionEvent.ACTION_MOVE: {
+                        float x = event.getX();
+                        float y = event.getY();
+
+                        if (Math.abs(dX - x) > 10 || Math.abs(dY - y) > 10) {
+                            isClick = false;
+
+//                            if (Math.abs(x - dX) > Math.abs(y - dY)) {// 横向
+//                                if (x > dX) { // →
+//
+//                                    dX = x;
+//                                    dY = y;
+//                                    onRight();
+//
+//                                } else { // ←
+//
+//                                    dX = x;
+//                                    dY = y;
+//                                    onLeft();
+//                                }
+//                            } else { //纵向
+//                                if (y > dY) { // 下
+//
+//                                    dX = x;
+//                                    dY = y;
+//                                    onDown();
+//                                } else { // 上
+//
+//                                    dX = x;
+//                                    dY = y;
+//                                    onUp();
+//                                }
+//                            }
+
+                        } else {
+                            isClick = true;
+                        }
+                        break;
+                    }
+                }
+                return true;
+            }
+
+        };
+    }
+
+    private void onUp() {
+        mResult.setText("上上");
+
+    }
+
+    private void onDown() {
+        mResult.setText("下下");
+
+    }
+
+    private void onLeft() {
+        mResult.setText("←←←←");
+
+    }
+
+    private void onRight() {
+        mResult.setText("→→→→");
+
+    }
+
+    /**
+     * Touch事件转 onClick
+     *
+     * @param event
+     */
+    private void doClick(MotionEvent event) {
+        mResult.setText("doClick");
+    }
 
     public Touch createTouchBean(MotionEvent event) {
         Touch touchBean = new Touch();
@@ -232,7 +352,7 @@ public class AirPlayActivity extends AppCompatActivity implements
                     Discover.getInstance().setDeviceState(device, Connectable.State.CONNECTING);
                     mRouterDialog.getAdapter().notifyDataSetChanged();
 
-                    mAirPlay.connect(Build.iP);
+                    mAirPlay.connect(device.getIp());
 
                 }
             });
@@ -374,6 +494,7 @@ public class AirPlayActivity extends AppCompatActivity implements
             mRemotePlayer.destroy();
         }
         super.onDestroy();
+        mAirPlay.unregisterOnConnectListener(this);
     }
 
     private boolean isConnecting() {

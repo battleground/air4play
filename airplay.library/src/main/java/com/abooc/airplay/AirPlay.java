@@ -21,8 +21,8 @@ public class AirPlay {
     private static AirPlay ourInstance = new AirPlay();
 
     private Gson mGson = new Gson();
-    private OnConnectListener mOnConnectListener;
-    ArrayList<OnReceiveMessageListener> mListeners = new ArrayList<>();
+    private ArrayList<OnConnectListener> mOnConnectListeners = new ArrayList<>();
+    private ArrayList<OnReceiveMessageListener> mListeners = new ArrayList<>();
 
     private Client mClient;
     private RemotePlayer mRemotePlayer;
@@ -70,6 +70,28 @@ public class AirPlay {
         }
     }
 
+//    public void send(String message, OnTimeOutListener listener) {
+//        send(message);
+//    }
+//
+//    private HashMap<String, CountDownTimer> mTimeOutListeners = new HashMap<>();
+//
+//    public interface OnTimeOutListener {
+//        void onTimeout();
+//    }
+//
+//    private CountDownTimer DownTimer = new CountDownTimer(3000, 1000) {
+//        @Override
+//        public void onTick(long millisUntilFinished) {
+//
+//        }
+//
+//        @Override
+//        public void onFinish() {
+//
+//        }
+//    };
+
     public RemotePlayer build() {
         if (mRemotePlayer == null) {
             mRemotePlayer = new RemotePlayer(new Sender() {
@@ -83,8 +105,14 @@ public class AirPlay {
     }
 
 
-    public AirPlay setOnConnectListener(OnConnectListener listener) {
-        mOnConnectListener = listener;
+    public AirPlay registerOnConnectListener(OnConnectListener listener) {
+        if (listener != null && !mOnConnectListeners.contains(listener))
+            mOnConnectListeners.add(listener);
+        return ourInstance;
+    }
+
+    public AirPlay unregisterOnConnectListener(OnConnectListener listener) {
+        mOnConnectListeners.remove(listener);
         return ourInstance;
     }
 
@@ -113,14 +141,13 @@ public class AirPlay {
 
         @Override
         public void onOpen(final ServerHandshake serverHandshake) {
-            if (mRemotePlayer != null)
-                mRemotePlayer.remoteOn();
             Debug.anchor(getConnection().getRemoteSocketAddress());
             UiThread.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (mOnConnectListener != null) {
-                        mOnConnectListener.onOpen(serverHandshake);
+                    int size = mOnConnectListeners.size();
+                    for (int i = 0; i < size; i++) {
+                        mOnConnectListeners.get(i).onOpen(serverHandshake);
                     }
                 }
             });
@@ -128,8 +155,6 @@ public class AirPlay {
 
         @Override
         public void onMessage(String message) {
-            if (mRemotePlayer != null)
-                mRemotePlayer.remoteOn();
             Debug.anchor(getConnection().getRemoteSocketAddress() + ":" + message);
             Message toUi = Message.obtain();
             toUi.obj = message;
@@ -138,14 +163,13 @@ public class AirPlay {
 
         @Override
         public void onClose(final int code, final String reason, final boolean remote) {
-            if (mRemotePlayer != null)
-                mRemotePlayer.remoteOff();
             Debug.anchor(getConnection().getRemoteSocketAddress());
             UiThread.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (mOnConnectListener != null) {
-                        mOnConnectListener.onClose(code, reason, remote);
+                    int size = mOnConnectListeners.size();
+                    for (int i = 0; i < size; i++) {
+                        mOnConnectListeners.get(i).onClose(code, reason, remote);
                     }
                 }
             });
@@ -159,8 +183,9 @@ public class AirPlay {
             UiThread.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (mOnConnectListener != null) {
-                        mOnConnectListener.onError(e);
+                    int size = mOnConnectListeners.size();
+                    for (int i = 0; i < size; i++) {
+                        mOnConnectListeners.get(i).onError(e);
                     }
                 }
             });
@@ -175,8 +200,12 @@ public class AirPlay {
             int size = mListeners.size();
             for (int i = 0; i < size; i++) {
                 String message = msg.obj.toString();
-                Action action = mGson.fromJson(message, Action.class);
-                mListeners.get(i).onReceiveMessage(action, message);
+                if (message.startsWith("{") && message.endsWith("}")) {
+                    Action action = mGson.fromJson(message, Action.class);
+                    mListeners.get(i).onReceiveMessage(action, message);
+                } else {
+                    mListeners.get(i).onReceiveMessage(null, message);
+                }
             }
         }
     };

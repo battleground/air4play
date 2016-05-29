@@ -8,8 +8,8 @@ android {
         applicationId "com.example.dayu.airplay"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 11
-        versionName "1.0.1604.22(alpha)"
+        versionCode 12
+        versionName "1.0.1605.18(alpha)"
     }
     buildTypes {
         release {

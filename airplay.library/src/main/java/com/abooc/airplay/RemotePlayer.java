@@ -29,23 +29,31 @@ import static com.abooc.airplay.model.Action.VOLUME;
  */
 public class RemotePlayer {
 
-
     private Sender mSender;
-    private boolean isPlaying = true;
 
-    private boolean isRemote = false;
+    private Player mPlayerStatus;
+
+    public enum Player {
+        /**
+         * 在播放状态
+         */
+        PLAYING,
+        /**
+         * 暂停状态
+         */
+        PASUE,
+        /**
+         * 视频已停止
+         */
+        STOP
+    }
 
     RemotePlayer(Sender sender) {
         mSender = sender;
     }
 
-    /**
-     * 远程端是否正在播放
-     *
-     * @param playing true正在播放,false没有播放:暂停,或者停止,或者没有在播视频
-     */
-    public void playing(boolean playing) {
-        isPlaying = playing;
+    public void setStatus(Player player) {
+        mPlayerStatus = player;
     }
 
     /**
@@ -54,15 +62,15 @@ public class RemotePlayer {
      * @return
      */
     public boolean isPlaying() {
-        return isPlaying;
+        return mPlayerStatus == Player.PLAYING;
     }
 
-    public void remoteOn() {
-        isRemote = true;
+    public boolean isPause() {
+        return mPlayerStatus == Player.PASUE;
     }
 
-    public void remoteOff() {
-        isRemote = false;
+    public boolean isStop() {
+        return mPlayerStatus == Player.STOP;
     }
 
     /**
@@ -71,7 +79,7 @@ public class RemotePlayer {
      * @return
      */
     public boolean isRemoting() {
-        return isRemote;
+        return mPlayerStatus != null;
     }
 
     private String toString(Object object) {
@@ -92,7 +100,7 @@ public class RemotePlayer {
      * @param name
      * @param position
      */
-    public void start(V.Type type, String url, String name, long position) {
+    public V start(V.Type type, String url, String name, long position) {
         V v = new V();
         v.type = type.value();
         v.name = name;
@@ -101,6 +109,7 @@ public class RemotePlayer {
         Action action = new Action(START);
         action.setInfo(v);
         mSender.doSend(toString(action));
+        return v;
     }
 
     /**
@@ -156,10 +165,6 @@ public class RemotePlayer {
         mSender.doSend(toString(action));
     }
 
-    public void destroy() {
-        mSender = null;
-    }
-
     /**
      * 向远端发送TOUCH事件
      *
@@ -198,6 +203,10 @@ public class RemotePlayer {
     public void doSettings(int actionCode) {
         Action action = new Action(actionCode);
         mSender.doSend(toString(action));
+    }
+
+    public void destroy() {
+        mPlayerStatus = null;
     }
 
 }

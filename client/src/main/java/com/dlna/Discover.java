@@ -69,26 +69,6 @@ public class Discover {
         mSelectedDevice.changeState(state);
     }
 
-    public Device getSelectedDevice() {
-        return mSelectedDevice;
-    }
-
-    /**
-     * 是否有媒体设备
-     *
-     * @return
-     */
-    public boolean noRoutes() {
-        return Empty.isEmpty(deviceList);
-    }
-
-    public void addLocalDevice() {
-//        mSelectedDevice = new Device();
-//        mSelectedDevice.changeState(Connectable.State.CONNECTED);
-//        mSelectedDevice.setName(mMediaRouter.getDefaultRoute().getName());
-//        deviceList.add(0, mSelectedDevice);
-    }
-
     /**
      * 获取当前检索到的设备
      *

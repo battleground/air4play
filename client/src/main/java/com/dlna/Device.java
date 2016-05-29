@@ -5,8 +5,6 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
-import org.lee.android.util.Log;
-
 import tv.matchstick.flint.FlintDevice;
 
 
@@ -56,7 +54,6 @@ public class Device implements Connectable {
      */
     @Override
     public void changeState(State state) {
-        Log.anchor(state);
         this.mState = state;
     }
 

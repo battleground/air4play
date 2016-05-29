@@ -20,11 +20,16 @@ public class V {
      * 1 暴风云普通视频
      * 2 暴风云全景(VR)视频
      */
+    @Keep
     public enum Type {
 
+        @Keep
         TYPE_OTHER(-1),
+        @Keep
         TYPE_NORMAL(0),
+        @Keep
         TYPE_BAOFENG(1),
+        @Keep
         TYPE_BAOFENG_VR(2);
 
         int value;
@@ -33,6 +38,7 @@ public class V {
             this.value = value;
         }
 
+        @Keep
         public int value() {
             return value;
         }
@@ -46,6 +52,8 @@ public class V {
 
     @Keep
     public int type;
+    @Keep
+    public String id;
     @Keep
     public String name;
     @Keep

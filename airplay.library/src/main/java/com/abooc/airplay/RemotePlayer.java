@@ -53,10 +53,6 @@ public class RemotePlayer {
     }
 
     /**
-     * 远程端是否正在播放
-     *
-     * @return
-    /**
      * 设置播放状态
      *
      * @param player 播放状态

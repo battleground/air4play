@@ -28,7 +28,7 @@ android {
 dependencies {
     repositories {
         maven {
-            url "http://192.168.8.212:8081/repository/maven-releases/"
+            url "http://192.168.8.212:8081/repository/maven-public/"
         }
     }
     compile 'com.abooc.debug:debug-core:latest.integration'

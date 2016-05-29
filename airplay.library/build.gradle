@@ -8,7 +8,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 13
-        versionName "1.2.1"
+        versionName "1.2.2"
     }
     buildTypes {
         release {
@@ -20,7 +20,7 @@ android {
 
 dependencies {
     repositories {
-        maven { url "http://192.168.8.212:8081/repository/maven-releases/" }
+        maven { url "http://192.168.8.212:8081/repository/maven-public/" }
     }
     compile 'com.abooc.debug:debug-core:latest.integration'
 

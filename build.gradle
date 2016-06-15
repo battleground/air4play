@@ -16,6 +16,7 @@ allprojects {
     repositories {
         mavenCentral()
         jcenter()
+        maven { url "http://192.168.8.212:8081/repository/maven-public/" }
     }
 }
 

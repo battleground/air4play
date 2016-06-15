@@ -14,7 +14,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.abooc.airplay.AirPlay;
-import com.abooc.airplay.Build;
 import com.abooc.airplay.OnConnectListener;
 import com.abooc.airplay.OnReceiveMessageListener;
 import com.abooc.airplay.RemotePlayer;

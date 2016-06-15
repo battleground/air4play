@@ -1,5 +1,6 @@
 package com.abooc.airplay;
 
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -13,6 +14,7 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AirPlay {
 
@@ -26,6 +28,7 @@ public class AirPlay {
 
     private Client mClient;
     private RemotePlayer mRemotePlayer;
+    private HashMap<Integer, OnResponseListener> mOnResponseListeners = new HashMap<>();
 
     private AirPlay() {
 
@@ -54,14 +57,15 @@ public class AirPlay {
         mClient.connect();
     }
 
-    public void sendVersion(int versionCode) {
-        send("{\"code\":" + versionCode + "}");
-    }
-
+    /**
+     * Send message
+     *
+     * @param message 内容，Json格式，见协议文档。
+     */
     public void send(String message) {
         if (isConnecting()) {
-            Debug.anchor("send:" + message);
             try {
+                Debug.anchor("send:" + message);
                 mClient.send(message);
             } catch (IllegalArgumentException e) {
                 Debug.e(e.getMessage());
@@ -69,27 +73,20 @@ public class AirPlay {
         }
     }
 
-//    public void send(String message, OnTimeOutListener listener) {
-//        send(message);
-//    }
-//
-//    private HashMap<String, CountDownTimer> mTimeOutListeners = new HashMap<>();
-//
-//    public interface OnTimeOutListener {
-//        void onTimeout();
-//    }
-//
-//    private CountDownTimer DownTimer = new CountDownTimer(3000, 1000) {
-//        @Override
-//        public void onTick(long millisUntilFinished) {
-//
-//        }
-//
-//        @Override
-//        public void onFinish() {
-//
-//        }
-//    };
+    /**
+     * Send message
+     *
+     * @param actionCode 通信指令
+     * @param message    内容，Json格式，见协议文档。
+     * @param listener   消息发送反馈
+     */
+    public void send(int actionCode, String message, OnResponseListener listener) {
+        ResponseTimer.cancel();
+        mOnResponseListeners.put(actionCode, listener);
+        ResponseTimer.id = actionCode;
+        ResponseTimer.start();
+        send(message);
+    }
 
     public RemotePlayer build() {
         if (mRemotePlayer == null) {
@@ -202,12 +199,55 @@ public class AirPlay {
                 if (message.startsWith("{") && message.endsWith("}")) {
                     Action action = mGson.fromJson(message, Action.class);
                     mListeners.get(i).onReceiveMessage(action, message);
-                } else {
-                    mListeners.get(i).onReceiveMessage(null, message);
+
+                    if (mOnResponseListeners.containsKey(action.getCode())) {
+                        mOnResponseListeners.get(action.getCode()).onResponse(action, message);
+                        mOnResponseListeners.remove(action.getCode());
+                    }
+//                } else {
+//                    mListeners.get(i).onReceiveMessage(null, message);
                 }
             }
         }
     };
 
+
+    public interface OnResponseListener {
+        void onNoResponse();
+
+        void onResponse(Action action, String message);
+    }
+
+    private ResponseTimer ResponseTimer = new ResponseTimer(1000, 1000) {
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
+
+        @Override
+        public void onFinish() {
+            if (!mOnResponseListeners.isEmpty()) {
+                mOnResponseListeners.get(id).onNoResponse();
+                mOnResponseListeners.remove(id);
+            }
+        }
+    };
+
+    private abstract class ResponseTimer extends CountDownTimer {
+
+        public int id;
+
+        /**
+         * @param millisInFuture    The number of millis in the future from the call
+         *                          to {@link #start()} until the countdown is done and {@link #onFinish()}
+         *                          is called.
+         * @param countDownInterval The interval along the way to receive
+         *                          {@link #onTick(long)} callbacks.
+         */
+        public ResponseTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+    }
 
 }

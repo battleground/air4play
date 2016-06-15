@@ -16,9 +16,9 @@ afterEvaluate { project ->
     uploadArchives {
         repositories {
             mavenDeployer {
-                pom.groupId = GROUP
-                pom.artifactId = POM_ARTIFACT_ID
-                pom.version = VERSION_NAME
+                pom.groupId = groupId
+                pom.artifactId = artifactId
+                pom.version = version
                 repository(url: RELEASE_REPOSITORY_URL) {
                     authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
                 }

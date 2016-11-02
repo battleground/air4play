@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25"
 
     defaultConfig {
         applicationId "bf.cloud.black_board_ui"
@@ -25,6 +25,6 @@ dependencies {
     compile project(':airplay.library')
     compile files('libs/bfcloudplayer.jar')
     compile files('libs/exoplayerlib.jar')
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:appcompat-v7:25.+'
+    compile 'com.android.support:design:25.+'
 }

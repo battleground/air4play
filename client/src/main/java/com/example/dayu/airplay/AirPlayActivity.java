@@ -16,17 +16,16 @@ import android.widget.TextView;
 import com.abooc.airplay.AirPlay;
 import com.abooc.airplay.OnConnectListener;
 import com.abooc.airplay.OnReceiveMessageListener;
-import com.abooc.airplay.RemotePlayer;
 import com.abooc.airplay.Utils;
+import com.abooc.airplay.VRPlayer;
 import com.abooc.airplay.model.Action;
 import com.abooc.airplay.model.SeekProcess;
 import com.abooc.airplay.model.Touch;
 import com.abooc.airplay.model.V;
 import com.abooc.util.Debug;
-import com.dlna.Connectable;
 import com.dlna.Device;
 import com.dlna.Discover;
-import com.dlna.RouterListDialog;
+import com.dlna.RoutersDialog;
 import com.google.gson.Gson;
 
 import org.java_websocket.handshake.ServerHandshake;
@@ -51,7 +50,7 @@ public class AirPlayActivity extends AppCompatActivity implements
     private TextView mResult;
 
     private AirPlay mAirPlay;
-    private RemotePlayer mRemotePlayer;
+    private VRPlayer mRemotePlayer;
 
 
     // https://github.com/openflint/simple-player-demo/tree/master/sender
@@ -67,6 +66,7 @@ public class AirPlayActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         getSupportActionBar().setSubtitle(Version.getFullVersion(this));
 
+        Discover.creator(this);
         setContentView(R.layout.activity_air);
         bindVideoView();
 //        bindTouchPanel();
@@ -81,7 +81,7 @@ public class AirPlayActivity extends AppCompatActivity implements
         mAirPlay = AirPlay.getInstance();
         mAirPlay.registerOnConnectListener(this);
         mAirPlay.registerOnReceiveMessageListener(this);
-        mRemotePlayer = AirPlay.getInstance().build();
+        mRemotePlayer = AirPlay.getInstance().buildVRPlayer();
     }
 
     private void bindVideoView() {
@@ -128,14 +128,14 @@ public class AirPlayActivity extends AppCompatActivity implements
                         my = event.getY();
                         mIgnoreActionNums = 0;
                         Touch touch = createTouchBean(event);
-                        mRemotePlayer.touch(touch);
+                        mRemotePlayer.getVRController().touch(touch);
                         break;
                     }
                     case MotionEvent.ACTION_UP: {
                         down = false;
                         mIgnoreActionNums = 0;
                         Touch touch = createTouchBean(event);
-                        mRemotePlayer.touch(touch);
+                        mRemotePlayer.getVRController().touch(touch);
                         break;
                     }
                     case MotionEvent.ACTION_MOVE: {
@@ -145,7 +145,7 @@ public class AirPlayActivity extends AppCompatActivity implements
                                 mx = event.getX();
                                 my = event.getY();
                                 Touch touch = createTouchBean(event);
-                                mRemotePlayer.touch(touch);
+                                mRemotePlayer.getVRController().touch(touch);
                             }
                         }
                         break;
@@ -293,7 +293,7 @@ public class AirPlayActivity extends AppCompatActivity implements
     }
 
 
-    private RouterListDialog mRouterDialog;
+    private RoutersDialog mRouterDialog;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -340,16 +340,13 @@ public class AirPlayActivity extends AppCompatActivity implements
 
     public void showRoutersDialog() {
         if (mRouterDialog == null) {
-//            mRouterDialog = new RouterListDialog(this, android.R.style.Theme_Material_Light_Dialog_Alert);
-            mRouterDialog = new RouterListDialog(this);
+            mRouterDialog = new RoutersDialog(this);
             mRouterDialog.setTitle("选择设备");
             mRouterDialog.setCanceledOnTouchOutside(false);
-            mRouterDialog.setOnItemClickListener(new RouterListDialog.OnItemClickListener() {
+            mRouterDialog.setOnItemClickListener(new RoutersDialog.OnItemClickListener() {
                 @Override
                 public void onItemClick(DialogInterface dialog, AdapterView<?> parent, View view, int position) {
                     Device device = mRouterDialog.getAdapter().getItem(position);
-                    Discover.getInstance().setDeviceState(device, Connectable.State.CONNECTING);
-                    mRouterDialog.getAdapter().notifyDataSetChanged();
 
                     mAirPlay.connect(device.getIp());
 

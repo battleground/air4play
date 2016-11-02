@@ -114,7 +114,7 @@ public class DevicesAdapter extends BaseAdapter {
 
             if (device.isConnected()) {
                 warning.setVisibility(View.VISIBLE);
-                warning.setImageResource(R.drawable.ic_cast_grey);
+                warning.setImageResource(R.drawable.ic_cast_dark);
             } else if (device.isFailure()) {
 //                warning.setVisibility(View.VISIBLE);
 //                warning.setImageResource(R.drawable.ic_close_light);

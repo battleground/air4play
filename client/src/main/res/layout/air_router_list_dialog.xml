@@ -6,16 +6,31 @@
     android:background="@drawable/dialog_bg_rect"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@android:id/title"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:background="#2b2b2b"
-        android:gravity="center_vertical"
-        android:paddingLeft="15dp"
-        android:text="选择要投射的电视"
-        android:textColor="#FFF"
-        android:textSize="15sp" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@android:id/title"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:background="#2b2b2b"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:text="选择要投射的电视"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/retry"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="刷新" />
+    </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"

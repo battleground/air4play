@@ -27,7 +27,6 @@ public class AirPlay {
     private ArrayList<OnReceiveMessageListener> mListeners = new ArrayList<>();
 
     private Client mClient;
-    private RemotePlayer mRemotePlayer;
     private HashMap<Integer, OnResponseListener> mOnResponseListeners = new HashMap<>();
 
     private AirPlay() {
@@ -89,15 +88,23 @@ public class AirPlay {
     }
 
     public RemotePlayer build() {
-        if (mRemotePlayer == null) {
-            mRemotePlayer = new RemotePlayer(new Sender() {
-                @Override
-                public void doSend(String message) {
-                    send(message);
-                }
-            });
-        }
+        RemotePlayer mRemotePlayer = new RemotePlayer(new Sender() {
+            @Override
+            public void doSend(String message) {
+                send(message);
+            }
+        });
         return mRemotePlayer;
+    }
+
+    public VRPlayer buildVRPlayer() {
+        VRPlayer vrPlayer = new VRPlayer(new Sender() {
+            @Override
+            public void doSend(String message) {
+                send(message);
+            }
+        });
+        return vrPlayer;
     }
 
 

@@ -67,7 +67,7 @@ public class AirPlay {
                 Debug.anchor("send:" + message);
                 mClient.send(message);
             } catch (IllegalArgumentException e) {
-                Debug.e(e.getMessage());
+                Debug.error(e.getMessage());
             }
         }
     }

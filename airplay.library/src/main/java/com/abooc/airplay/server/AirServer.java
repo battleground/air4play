@@ -95,7 +95,7 @@ public class AirServer extends WebSocketServer {
 
     @Override
     public void onError(WebSocket conn, final Exception ex) {
-        Debug.e(conn.getRemoteSocketAddress() + ", Exception:" + ex);
+        Debug.error(conn.getRemoteSocketAddress() + ", Exception:" + ex);
 
         UiThread.post(new Runnable() {
             @Override

@@ -14,16 +14,16 @@
         android:theme="@style/Theme.AppCompat">
 
         <!-- 多屏协议 -->
-        <service
-            android:name="tv.matchstick.flint.service.FlintDeviceService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.media.MediaRouteProviderService" />
-            </intent-filter>
-        </service>
+        <!--<service-->
+            <!--android:name="tv.matchstick.flint.service.FlintDeviceService"-->
+            <!--android:exported="false">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.media.MediaRouteProviderService" />-->
+            <!--</intent-filter>-->
+        <!--</service>-->
 
         <activity
-            android:name=".AirPlayActivity"
+            android:name="com.airplay.PlayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light">
             <intent-filter>
@@ -32,13 +32,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ActivityDiscovery"
-            android:label="@string/title_activity_activity_discovery">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
+
+        <!--<activity-->
+            <!--android:name="com.example.dayu.airplay.AirPlayActivity"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/Theme.AppCompat.Light">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
+        <!--<activity-->
+            <!--android:name=".ActivityDiscovery"-->
+            <!--android:label="@string/title_activity_activity_discovery">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
     </application>
 
 </manifest>

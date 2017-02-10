@@ -18,6 +18,7 @@ allprojects {
         jcenter()
         maven { url "http://192.168.1.111:8081/repository/maven-public/" }
 //        maven { url "http://oss.abooc.com/repository/maven-public/" }
+        maven { url 'http://4thline.org/m2' }
     }
 }
 

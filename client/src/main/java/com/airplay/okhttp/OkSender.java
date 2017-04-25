@@ -18,7 +18,7 @@ import java.io.IOException;
  * email:allnet@live.cn
  * on 16/7/27.
  */
-public class OkRemoter implements Sender {
+public class OkSender implements Sender {
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -30,13 +30,13 @@ public class OkRemoter implements Sender {
     private String mDeviceIp;
     private String mServer;
 
-    private static OkRemoter mOur = new OkRemoter();
+    private static OkSender mOur = new OkSender();
     private OkHttpClient httpClient = new OkHttpClient();
 
-    private OkRemoter() {
+    private OkSender() {
     }
 
-    public static OkRemoter create(String server, int port) {
+    public static OkSender create(String server, int port) {
         mOur.buildServer(server, port);
         return mOur;
     }

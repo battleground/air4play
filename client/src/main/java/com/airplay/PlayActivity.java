@@ -22,12 +22,11 @@ import com.abooc.airremoter.model.Touch;
 import com.abooc.airremoter.model.V;
 import com.abooc.joker.dialog.ScanningDialog;
 import com.abooc.joker.dialog.UPnPPresenter;
-import com.abooc.joker.dialog.samples.SamplesActivity;
 import com.abooc.upnp.Discovery;
 import com.abooc.upnp.DlnaManager;
 import com.abooc.upnp.model.DeviceDisplay;
 import com.abooc.util.Debug;
-import com.airplay.okhttp.OkRemoter;
+import com.airplay.okhttp.OkSender;
 import com.example.dayu.airplay.Build;
 import com.example.dayu.airplay.R;
 import com.example.dayu.airplay.Version;
@@ -81,11 +80,11 @@ public class PlayActivity extends AppCompatActivity implements OnReceiveMessageL
         mScrollView = (ScrollView) findViewById(R.id.ScrollView);
         mResult = (TextView) findViewById(R.id.Result);
 
-        final OkRemoter iOkRemoter = OkRemoter.create("192.168.1.93", 21367);
+        final OkSender iOkSender = OkSender.create("192.168.1.93", 21367);
         mRemotePlayer = new VRPlayer(new Sender() {
             @Override
             public void doSend(String message) {
-                iOkRemoter.doSend(message);
+                iOkSender.doSend(message);
             }
         });
 
@@ -395,30 +394,7 @@ public class PlayActivity extends AppCompatActivity implements OnReceiveMessageL
         super.onPause();
     }
 
-//    public void showRoutersDialog() {
-//        if (mRouterDialog == null) {
-//            mRouterDialog = new RoutersDialog(this);
-//            mRouterDialog.setTitle("选择设备");
-//            mRouterDialog.setCanceledOnTouchOutside(false);
-//            mRouterDialog.setOnItemClickListener(new RoutersDialog.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(DialogInterface dialog, AdapterView<?> parent, View view, int position) {
-////                    Device device = mRouterDialog.getAdapter().getItem(position);
-//
-////                    mAirPlay.connect(device.getIp());
-//
-//                }
-//            });
-//        }
-//        mRouterDialog.show();
-//    }
-//
-//    private boolean isShowing() {
-//        if (mRouterDialog != null)
-//            return mRouterDialog.isShowing();
-//        return false;
-//    }
-
+    @Deprecated
     public void onPlayVideo(View view) {
         Debug.anchor();
         if (isConnecting()) {

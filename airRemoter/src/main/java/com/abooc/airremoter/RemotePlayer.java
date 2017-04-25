@@ -100,7 +100,9 @@ public class RemotePlayer {
      * @param url      视频真实源地址
      * @param name
      * @param position
+     * @Deprecated 采用标准的DLNA投放视频
      */
+    @Deprecated
     public V start(V.Type type, String url, String name, long position) {
         V v = new V();
         v.type = type.value();
